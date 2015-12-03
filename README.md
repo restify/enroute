@@ -2,6 +2,37 @@
 restify route specification via JSON
 
 # Example
+## Route Config
+```json
+{
+    "routes": {
+        "acceptcookies": {
+            "put": {
+                "source": "./routes/putAcceptCookies.js"
+            },
+            "get": {
+                "source": "./routes/getAcceptCookies.js"
+            }
+        },
+        "accountInfo": {
+            "get": {
+                "source": "./routes/getAccountInfo.js"
+            }
+        },
+        "cancelPlan": {
+            "post": {
+                "source": "./routes/postCancelPlan.js"
+            }
+        },
+        "accountInfo/old": {
+            "get": {
+                "source": "./routes/getAccountInfoOld.js"
+            }
+        }
+    }
+}
+```
+## Route Definition
 ```javascript
 'use strict';
 // Node core modules
