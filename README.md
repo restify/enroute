@@ -1,6 +1,34 @@
 # enroute
 restify route specification via JSON
 
+# How to invoke
+```javascript
+enroute.createRoute({
+            //restify server object
+            server: server,
+            //bunyan log object
+            log: log,
+            //array of route config object, the object includes route configuration file path
+            //and an optional baseUrl String for example v0.0.1/tvui/test, it will be prepend
+            //for every route path specified in route configuration file
+            routeConf: [{filePath : './test/fixture/es/route.json',
+                        baseUrl :
+                        helper.getBaseUrl('./test/fixture/es/container.json')}],
+            scriptPath : appRoot + '/test/fixture/es'
+        }, function() {
+            client.get('/0.0.1/website/test/gettest',
+                function(err, req, res, obj) {
+                if (err) {
+                    done(err);
+                }
+                assert.equal(obj.data, 'Hello world!',
+                          'Hello World endpoint response.');
+                done();
+            });
+        });
+    });
+```
+
 # Example
 ## Route Config
 ```json
@@ -32,7 +60,11 @@ restify route specification via JSON
     }
 }
 ```
-## Route Definition
+### Second level keys "acceptcookies", "accountInfo", "cancelPlan", "accountInfo/old" is url path.
+### third level keys are HTTP method
+### value of "source" is the route handler script's relative path from app root.
+
+## Route Handle Script Definition
 ```javascript
 'use strict';
 // Node core modules
@@ -63,9 +95,9 @@ function accountInfo(req, res, next) {
 
 module.exports = accountInfo;
 ```
-Route definitions must export as single function or an array of functions where the signature conforms to f(req, res, next). This is identical to writing a restify handler function. The req object contains request state, the api client, logging and metric clients that can be leveraged by the user land code in the endpoint script. The res object is used to send back the response to the client, and next() must be invoked when the script has completed. 
+Route definitions must export as single function or an array of functions where the signature conforms to f(req, res, next). This is identical to writing a restify handler function. The req object contains request state, the api client, logging and metric clients that can be leveraged by the user land code in the endpoint script. The res object is used to send back the response to the client, and next() must be invoked when the script has completed.
 
-Instead of a single function, route definitions can export an array of chained function handlers; increasing the modularity of their endpoint scripts. 
+Instead of a single function, route definitions can export an array of chained function handlers; increasing the modularity of their endpoint scripts.
 
 ```javascript
 'use strict';
