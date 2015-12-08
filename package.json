@@ -1,0 +1,51 @@
+{
+  "name": "restify-enroute",
+  "version": "0.0.1",
+  "main": "./lib/index.js",
+  "description": "dynamically inject routes into restify app from configuration file",
+  "homepage": "http://www.restify.com",
+  "author": {
+    "name": "Tsubomi Imamura",
+    "email": "tsubomi.imamura@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/restify/enroute"
+  },
+  "contributors": [
+    "Tsubomi Imamura",
+    "Yunong Xiao"
+  ],
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "restify",
+    "route"
+  ],
+  "scripts": {
+    "test": "make test",
+    "githooks": "make githooks",
+    "build": "make",
+    "prepush": "make prepush"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "eslint": "^0.24.1",
+    "jscs": "^1.13.1",
+    "mocha": "^2.2.5",
+    "nsp": "^2.1.0"
+  },
+  "dependencies": {
+    "app-root-path": "^1.0.0",
+    "assert-plus": "^0.1.5",
+    "body-parser": "^1.14.1",
+    "bunyan": "^1.5.1",
+    "dtrace-provider": "^0.6.0",
+    "restify": "^4.0.3",
+    "restify-clients": "^1.1.1",
+    "shelljs": "^0.5.3",
+    "verror": "^1.6.0"
+  }
+}
