@@ -1,7 +1,7 @@
 # enroute
 restify route specification via JSON
 
-# How to invoke
+# Usage Example
 ```javascript
 enroute.createRoute({
             //restify server object
@@ -29,8 +29,7 @@ enroute.createRoute({
     });
 ```
 
-# Example
-## Route Config
+# Route Configuration file Example
 ```json
 {
     "routes": {
@@ -60,9 +59,9 @@ enroute.createRoute({
     }
 }
 ```
-### Second level keys "acceptcookies", "accountInfo", "cancelPlan", "accountInfo/old" is url path.
-### third level keys are HTTP method
-### value of "source" is the route handler script's relative path from app root.
+Second level keys "acceptcookies", "accountInfo", "cancelPlan", "accountInfo/old" is url path.
+Third level keys are HTTP method names.
+The value of "source" is the route handler script's relative path from app root.
 
 ## Route Handle Script Definition
 ```javascript
