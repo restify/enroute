@@ -121,14 +121,16 @@ module.exports.createClient = function createClient() {
 
 /**
  * @public
- * getBaseUrl read version, account and group from conf file
- * generate baseUrl from it
+ * getBaseUrlAndVersion read account and group from conf file
+ * generate baseUrl and version from it
  * @param  {String} confFile confile file's relative path to appRoot
- * @returns {String} baseUrl string
+ * @returns {Array} baseUrl string and version string or array
  */
-module.exports.getBaseUrl = function getBaseUrl(confFile) {
+module.exports.getBaseUrlAndVersion = function getBaseUrlAndVersion(confFile) {
     var fileAbsPath = path.normalize(path.join(appRoot, confFile));
     var confObj;
+    var data = [];
+    var version;
 
     try {
         confObj = JSON.parse(bootstrap.readFile(
@@ -140,10 +142,6 @@ module.exports.getBaseUrl = function getBaseUrl(confFile) {
     }
     var baseUrl = '';
 
-    if (confObj.version) {
-        baseUrl += confObj.version;
-    }
-
     if (confObj.account && confObj.account.name) {
         baseUrl +=  '/' + confObj.account.name;
     }
@@ -151,8 +149,14 @@ module.exports.getBaseUrl = function getBaseUrl(confFile) {
     if (confObj.group) {
         baseUrl += '/' + confObj.group;
     }
-    return baseUrl;
+    data.push(baseUrl);
+
+    if (typeof confObj.version !== 'undefined') {
+        data.push(confObj.version);
+    }
+    return data;
 };
+
 /**
  * @public
  * create testing common middleware called before route handler
