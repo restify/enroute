@@ -130,7 +130,6 @@ module.exports.getBaseUrlAndVersion = function getBaseUrlAndVersion(confFile) {
     var fileAbsPath = path.normalize(path.join(appRoot, confFile));
     var confObj;
     var data = [];
-    var version;
 
     try {
         confObj = JSON.parse(bootstrap.readFile(
