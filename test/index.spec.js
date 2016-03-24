@@ -35,8 +35,8 @@ describe('restify/enroute node module.', function () {
                         baseUrl : routeData[0],
                         version: routeData[1]}],
             scriptPath : appRoot + '/test/fixture/es',
-            preMiddleware: helper.preMiddleware,
-            postMiddleware: helper.postMiddleware
+            preMiddleware: helper.preMiddleware(),
+            postMiddleware: helper.postMiddleware()
         }, function () {
             var options = {
                 path : '/website/test/gettest',

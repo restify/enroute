@@ -12,16 +12,6 @@ var assert = require('assert-plus');
 var LOG = bunyan.createLogger({
     level: (process.env.LOG_LEVEL || bunyan.INFO),
     name: 'testlog',
-    streams: [{
-        level: bunyan.TRACE,
-        type: 'raw',
-        stream: new restify.bunyan.RequestCaptureStream({
-            level: bunyan.WARN,
-            maxRecords: 100,
-            maxRequestIds: 100,
-            stream: process.stderr
-        })
-    }],
     serializers: bunyan.stdSerializers
 });
 var appRoot = require('app-root-path').path;
@@ -166,6 +156,8 @@ module.exports.preMiddleware = function mockPreMiddleware() {
     var mw = [];
     mw.push(bodyParser.json());
     mw.push(function context(req, res, next) {
+        LOG.info('inside universal preMiddleware');
+
         req.context = 'rest-enroute module';
         next();
     });
@@ -181,6 +173,7 @@ module.exports.preMiddleware = function mockPreMiddleware() {
 module.exports.postMiddleware = function mockPostMiddleware() {
     var mw = [];
     mw.push(function logData(req, res, next) {
+        LOG.info('inside universal postMiddleware');
         LOG.info('request end');
         next();
     });
