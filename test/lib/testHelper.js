@@ -114,12 +114,11 @@ module.exports.createClient = function createClient() {
  * getBaseUrlAndVersion read account and group from conf file
  * generate baseUrl and version from it
  * @param  {String} confFile confile file's relative path to appRoot
- * @returns {Array} baseUrl string and version string or array
+ * @returns {String} baseUrl string
  */
-module.exports.getBaseUrlAndVersion = function getBaseUrlAndVersion(confFile) {
+module.exports.getBaseUrl = function getBaseUrl(confFile) {
     var fileAbsPath = path.normalize(path.join(appRoot, confFile));
     var confObj;
-    var data = [];
 
     try {
         confObj = JSON.parse(bootstrap.readFile(
@@ -138,12 +137,7 @@ module.exports.getBaseUrlAndVersion = function getBaseUrlAndVersion(confFile) {
     if (confObj.group) {
         baseUrl += '/' + confObj.group;
     }
-    data.push(baseUrl);
-
-    if (typeof confObj.version !== 'undefined') {
-        data.push(confObj.version);
-    }
-    return data;
+    return baseUrl;
 };
 
 /**

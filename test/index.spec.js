@@ -24,25 +24,18 @@ describe('restify/enroute node module.', function () {
     });
 
     it('test route creation for get', function (done) {
-        var routeData =
-        helper.getBaseUrlAndVersion('./test/fixture/es/container.json');
-        assert.equal(routeData.length, 2, 'Need route base url and version');
         client = helper.createClient();
         enroute.createRoute({
             server: server,
             log: log,
             routeConf: [{filePath : './test/fixture/es/route.json',
-                        baseUrl : routeData[0],
-                        version: routeData[1]}],
+                        baseUrl : helper.getBaseUrl('./test/fixture/es/container.json')}],
             scriptPath : appRoot + '/test/fixture/es',
             preMiddleware: helper.preMiddleware(),
             postMiddleware: helper.postMiddleware()
         }, function () {
             var options = {
-                path : '/website/test/gettest',
-                headers: {
-                    'accept-version': '1.0.5'
-                }
+                path : '/website/test/gettest'
             };
             client.get(options,
                 function (err, req, res, obj) {
@@ -57,10 +50,7 @@ describe('restify/enroute node module.', function () {
     });
     it('test route creation for post', function (done) {
         var options = {
-            path : '/website/test/posttest',
-            headers: {
-                'accept-version': '^1.0.1'
-            }
+            path : '/website/test/posttest'
         };
         client.post(options, {body: 'test post'},
             function (err, req, res, obj) {
