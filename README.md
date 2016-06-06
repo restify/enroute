@@ -1,6 +1,6 @@
 # enroute
 This module provides convenience way to specify restify route in a declarative JSON format.
-# Route Configuration file Example
+## Route Configuration file Example
 ```json
 {
     "routes": {
