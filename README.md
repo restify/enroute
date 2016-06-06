@@ -1,34 +1,5 @@
 # enroute
-restify route specification via JSON
-
-# Usage Example
-```javascript
-enroute.createRoute({
-            //restify server object
-            server: server,
-            //bunyan log object
-            log: log,
-            //array of route config object, the object includes route configuration file path
-            //and an optional baseUrl String for example v0.0.1/tvui/test, it will be prepend
-            //for every route path specified in route configuration file
-            routeConf: [{filePath : './test/fixture/es/route.json',
-                        baseUrl :
-                        helper.getBaseUrl('./test/fixture/es/container.json')}],
-            scriptPath : appRoot + '/test/fixture/es'
-        }, function() {
-            client.get('/0.0.1/website/test/gettest',
-                function(err, req, res, obj) {
-                if (err) {
-                    done(err);
-                }
-                assert.equal(obj.data, 'Hello world!',
-                          'Hello World endpoint response.');
-                done();
-            });
-        });
-    });
-```
-
+This module provides convenience way to specify restify route in a declarative JSON format.
 # Route Configuration file Example
 ```json
 {
@@ -59,11 +30,46 @@ enroute.createRoute({
     }
 }
 ```
-Second level keys "acceptcookies", "accountInfo", "cancelPlan", "accountInfo/old" is url path.
-Third level keys are HTTP method names.
+The second level keys "acceptcookies", "accountInfo", "cancelPlan", "accountInfo/old" is url path.
+The third level keys are HTTP method names.
 The value of "source" is the route handler script's relative path from app root.
 
-## Route Handle Script Definition
+
+## Usage Example
+```javascript
+ enroute.createRoute({
+            //restify server object
+            server: server,
+            //bunyan log object
+            log: log,
+            //array of route config object, the object includes route configuration file path
+            //and an optional baseUrl String, it will be prepend
+            //for every route path specified in route configuration file
+            routeConf: [{filePath :  routeScriptRootPath + '/route.json'}],
+            //user can specify an array of universal middleware function before all routes
+            preMiddleware : preHandlerArr,
+            //user can specify an array of universal middleware function after all routes
+            postMiddleware : postMiddleware,
+            //the root path of all route scripts, it can be different from route.json path
+            scriptPath : routeScriptRootPath
+        }, function() {
+        //user can specify optional callback function
+            client.get('/hello',
+                function(err, req, res, obj) {
+                if (err) {
+                    done(err);
+                }
+                assert.equal(obj.data, 'Hello world!',
+                          'Hello World endpoint response.');
+                done();
+            });
+        });
+    });
+```
+Routes can be injected into Restify server either before or after server start.
+
+
+## Route Handler Script Example
 ```javascript
 'use strict';
 // Node core modules
@@ -136,5 +142,5 @@ function accountInfo(req, res, next) {
 module.exports = [somePreHandler, accountInfo, postHandler];
 ```
 
-Notice that the functions can be both defined within the endpoint script itself, but can also be a module. Critically, every function in the chain must invoke ```next()```, otherwise the request will hang.
+Notice that the functions can be both defined within the script itself, but can also be a module. Critically, every function in the chain must invoke ```next()```, otherwise the request will hang.
 
