@@ -32,7 +32,8 @@ describe('restify/enroute node module.', function () {
                         baseUrl : helper.getBaseUrl('./test/fixture/es/container.json')}],
             scriptPath : appRoot + '/test/fixture/es',
             preMiddleware: helper.preMiddleware(),
-            postMiddleware: helper.postMiddleware()
+            postMiddleware: helper.postMiddleware(),
+            expiry: {header: 'x-request-expiry-time'}
         }, function () {
             var options = {
                 path : '/website/test/gettest'

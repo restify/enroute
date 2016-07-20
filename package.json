@@ -1,6 +1,6 @@
 {
   "name": "restify-enroute",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./lib/index.js",
   "description": "dynamically inject routes into restify app from configuration file",
   "homepage": "http://www.restify.com",
@@ -43,7 +43,7 @@
     "body-parser": "^1.14.1",
     "bunyan": "^1.5.1",
     "dtrace-provider": "^0.6.0",
-    "restify": "^4.0.3",
+    "restify": "^4.1.1",
     "restify-clients": "^1.1.1",
     "shelljs": "^0.5.3",
     "verror": "^1.6.0"
