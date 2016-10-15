@@ -1,6 +1,6 @@
 {
   "name": "restify-enroute",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "main": "./lib/index.js",
   "description": "dynamically inject routes into restify app from configuration file",
   "homepage": "http://www.restify.com",
