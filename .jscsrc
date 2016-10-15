@@ -19,7 +19,7 @@
 
     // alignment rules
     "maximumLineLength": {
-        "value": 80,
+        "value": 120,
         "allowComments": false,
         "allowUrlComments": false,
         "allowRegex": false

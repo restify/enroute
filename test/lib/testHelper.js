@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 var restify = require('restify');
 var restifyClients = require('restify-clients');
 var bunyan = require('bunyan');
-var bootstrap = require('../../lib/index');
 var assert = require('assert-plus');
 
 var LOG = bunyan.createLogger({
@@ -35,20 +34,21 @@ function getDtrace() {
 }
 
 /**
- * @private
+ * @public
  * json parse a file's content synchronously
  * read from disk
  * @throws {Error} If JSON.parse fails
  * @param  {String} fpath file path
  * @returns {Object}  file content as object
  */
-function loadConf(fpath) {
+module.exports.loadConf = function loadConf(fpath) {
     var confObj;
 
     try {
-        confObj = JSON.parse(bootstrap.readFile(
-            path.resolve(fpath),
-            LOG, 'Can not find test config file '));
+        //synchronize load config file
+        /*eslint-disable global-require*/
+        confObj = require(path.resolve(fpath));
+        /*eslint-enable*/
     } catch (err) {
         LOG.error(err);
         throw err;
@@ -58,7 +58,7 @@ function loadConf(fpath) {
     assert.string(confObj.restify.host,
         'server hostname or ip from config object');
     return confObj;
-}
+};
 
 
 /**
@@ -69,14 +69,14 @@ function loadConf(fpath) {
  * @returns {Object}   restify server
  */
 module.exports.createServer = function createServer(cb) {
-    var confObj = loadConf(appRoot + '/test/fixture/testConf.json');
+    var confObj = this.loadConf(appRoot + '/test/fixture/testConf.json');
     var port = process.env.UNIT_TEST_PORT || confObj.restify.port;
     var dtra = getDtrace();
     var server = restify.createServer({
         dtrace: dtra,
         log: LOG
     });
-
+    server.pre(restify.pre.userAgentConnection());
     server.on('after', restify.auditLogger({
         log: LOG.child({
             component: 'audit'
@@ -98,7 +98,7 @@ module.exports.createServer = function createServer(cb) {
  * @returns {Object} restify json client object
  */
 module.exports.createClient = function createClient() {
-    var confObj = loadConf(appRoot + '/test/fixture/testConf.json');
+    var confObj = this.loadConf(appRoot + '/test/fixture/testConf.json');
     var port = process.env.UNIT_TEST_PORT || confObj.restify.port;
     var dtra = getDtrace();
     var client = restifyClients.createJsonClient({
@@ -121,9 +121,10 @@ module.exports.getBaseUrl = function getBaseUrl(confFile) {
     var confObj;
 
     try {
-        confObj = JSON.parse(bootstrap.readFile(
-            fileAbsPath,
-            LOG, 'Can not find test config file '));
+        //synchronize load config file
+        /*eslint-disable global-require*/
+        confObj = require(fileAbsPath);
+        /*eslint-enable*/
     } catch (err) {
         LOG.error(err);
         throw err;

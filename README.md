@@ -44,7 +44,9 @@ The value of "source" is the route handler script's relative path from app root.
             log: log,
             //array of route config object, the object includes route configuration file path
             //and an optional baseUrl String, it will be prepend
-            //for every route path specified in route configuration file
+            //for every route path specified in route configuration file. user can also provide
+            //route definition object directly by doing
+            //routeConf: [{routeDefinitionObj : routeObj}],
             routeConf: [{filePath :  routeScriptRootPath + '/route.json'}],
             //user can specify an array of universal middleware function before all routes
             preMiddleware : preHandlerArr,
