@@ -75,7 +75,7 @@ describe('enroute-install', function () {
 
     it('should install routes', function (done) {
         enroute({
-            data: CONFIG,
+            config: CONFIG,
             server: SERVER
         }, function (err) {
             assert.ifError(err);
@@ -85,7 +85,7 @@ describe('enroute-install', function () {
 
     it('should fail if route source DNE', function (done) {
         enroute({
-            data: {
+            config: {
                 foo: {
                     get: 'source does not exist'
                 }
@@ -99,7 +99,7 @@ describe('enroute-install', function () {
 
     it('should fail if route source is not a function', function (done) {
         enroute({
-            data: {
+            config: {
                 foo: {
                     get: './test/etc/notAFunction.js'
                 }

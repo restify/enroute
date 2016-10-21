@@ -65,7 +65,7 @@ describe('enroute-config', function () {
     it('should parse config from file', function (done) {
         parser.parse({
             version: 1,
-            path: CONFIG_PATH
+            configPath: CONFIG_PATH
         }, function (err, config) {
             assert.ifError(err);
             assert.isNotNull(config);
@@ -76,7 +76,7 @@ describe('enroute-config', function () {
     it('should parse config from string', function (done) {
         parser.parse({
             version: 1,
-            data: CONFIG
+            config: CONFIG
         }, function (err, config) {
             assert.ifError(err);
             assert.deepEqual(CONFIG, config);
@@ -89,7 +89,7 @@ describe('enroute-config', function () {
         delete config.schemaVersion;
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -101,7 +101,7 @@ describe('enroute-config', function () {
         config.schemaVersion = '1';
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -113,7 +113,7 @@ describe('enroute-config', function () {
         config.schemaVersion = 2;
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -125,7 +125,7 @@ describe('enroute-config', function () {
         config.foo = 'not-an-object';
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -140,7 +140,7 @@ describe('enroute-config', function () {
         };
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -153,7 +153,7 @@ describe('enroute-config', function () {
         config.foo.post = { };
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -166,7 +166,7 @@ describe('enroute-config', function () {
         config.foo.post.foo = 'foo';
 
         parser.parse({
-            data: config
+            config: config
         }, function (err) {
             assert.isOk(err);
             return done();
