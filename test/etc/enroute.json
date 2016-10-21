@@ -1,0 +1,19 @@
+{
+    "schemaVersion": 1,
+    "endpoint": {
+        "get": {
+            "source": "./lib/system/index.js"
+        },
+        "post": {
+            "source": "./lib/system/index.js"
+        }
+    },
+    "shadow": {
+        "get": {
+            "source": "./lib/shadow/index.js"
+        },
+        "post": {
+            "source": "./lib/shadow/index.js"
+        }
+    }
+}

@@ -35,17 +35,14 @@
     "eslint": "^0.24.1",
     "jscs": "^1.13.1",
     "mocha": "^2.2.5",
-    "nsp": "^2.1.0"
+    "nsp": "^2.1.0",
+    "restify": "^4.0.0",
+    "restify-clients": "^1.4.0"
   },
   "dependencies": {
-    "app-root-path": "^1.0.0",
+    "ajv": "^4.8.0",
     "assert-plus": "^0.1.5",
-    "body-parser": "^1.14.1",
-    "bunyan": "^1.5.1",
-    "dtrace-provider": "^0.6.0",
-    "restify": "^4.1.1",
-    "restify-clients": "^1.1.1",
-    "shelljs": "^0.5.3",
+    "vasync": "^1.6.4",
     "verror": "^1.6.0"
   }
 }

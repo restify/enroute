@@ -19,7 +19,7 @@
 
     // alignment rules
     "maximumLineLength": {
-        "value": 120,
+        "value": 80,
         "allowComments": false,
         "allowUrlComments": false,
         "allowRegex": false
@@ -50,8 +50,7 @@
 
     // require rules
     "requireBlocksOnNewline": true,
-    // TODO: come back to this rule after we normalize code base
-    // "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
+    "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
     "requireCapitalizedConstructors": true,
     "requireCurlyBraces": [
         "if",
