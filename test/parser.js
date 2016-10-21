@@ -8,131 +8,166 @@ var parser = require('../lib/parser');
 var CONFIG_PATH = './test/etc/enroute.json';
 var CONFIG = {
     schemaVersion: 1,
-    endpoint: {
+    foo: {
         get: {
-            source: './lib/system/index.js'
+            source: './test/etc/fooGet.js'
         },
         post: {
-            source: './lib/system/index.js'
+            source: './test/etc/fooPost.js'
+        },
+        put: {
+            source: './test/etc/fooPut.js'
+        },
+        delete: {
+            source: './test/etc/fooDelete.js'
+        },
+        head: {
+            source: './test/etc/fooHead.js'
+        },
+        patch: {
+            source: './test/etc/fooPatch.js'
+        },
+        options: {
+            source: './test/etc/fooOptions.js'
         }
     },
-    shadow: {
+    bar: {
         get: {
-            source: './lib/shadow/index.js'
+            source: './test/etc/barGet.js'
         },
         post: {
-            source: './lib/shadow/index.js'
+            source: './test/etc/barPost.js'
+        },
+        put: {
+            source: './test/etc/barPut.js'
+        },
+        delete: {
+            source: './test/etc/barDelete.js'
+        },
+        head: {
+            source: './test/etc/barHead.js'
+        },
+        patch: {
+            source: './test/etc/barPatch.js'
+        },
+        options: {
+            source: './test/etc/barOptions.js'
+        }
+    },
+    array: {
+        get: {
+            source: './test/etc/arrayGet.js'
         }
     }
 };
 
-describe('enroute-config', function() {
-    it('should parse config from file', function(done) {
+describe('enroute-config', function () {
+    it('should parse config from file', function (done) {
         parser.parse({
             version: 1,
             path: CONFIG_PATH
-        }, function(err, config) {
+        }, function (err, config) {
             assert.ifError(err);
             assert.isNotNull(config);
             return done();
         });
     });
 
-    it('should parse config from string', function(done) {
+    it('should parse config from string', function (done) {
         parser.parse({
             version: 1,
             data: CONFIG
-        }, function(err, config) {
+        }, function (err, config) {
             assert.ifError(err);
             assert.deepEqual(CONFIG, config);
             return done();
         });
     });
 
-    it('should error if no schemaVersion', function(done) {
+    it('should error if no schemaVersion', function (done) {
         var config = _.cloneDeep(CONFIG);
         delete config.schemaVersion;
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });
     });
 
-    it('should error if no schemaVersion not number', function(done) {
+    it('should error if no schemaVersion not number', function (done) {
         var config = _.cloneDeep(CONFIG);
         config.schemaVersion = '1';
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });
     });
 
-    it('should error if no schemaVersion not supported', function(done) {
+    it('should error if no schemaVersion not supported', function (done) {
         var config = _.cloneDeep(CONFIG);
         config.schemaVersion = 2;
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });
     });
 
-    it('should error if route is not an object', function(done) {
+    it('should error if route is not an object', function (done) {
         var config = _.cloneDeep(CONFIG);
-        config.endpoint = 'not-an-object';
+        config.foo = 'not-an-object';
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });
     });
 
-    it('should error if route contains invalid HTTP method', function(done) {
+    it('should error if route contains invalid HTTP method', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.endpoint.foo = {
+        config.foo.foo = {
             source: 'foo'
         };
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });
     });
 
-    it('should error if route does not contain source', function(done) {
+    it('should error if route does not contain source', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.endpoint.post = { };
+        config.foo.post = { };
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });
     });
 
-    it('should error if route contains other props', function(done) {
+    it('should error if route contains other props', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.endpoint.post.foo = 'foo';
+        config.foo.post.foo = 'foo';
 
         parser.parse({
             data: config
-        }, function(err) {
+        }, function (err) {
             assert.isOk(err);
             return done();
         });

@@ -30,7 +30,6 @@ LIB_FILES  	   := $(ROOT)/lib
 TEST_FILES     := $(ROOT)/test
 COVERAGE_FILES := $(ROOT)/coverage
 LCOV           := $(ROOT)/coverage/lcov.info
-SHRINKWRAP     := $(ROOT)/npm-shrinkwrap.json
 SRCS           := $(shell find $(LIB_FILES) $(TEST_FILES) -name '*.js' -type f \
 					-not \( -path './node_modules/*' -prune \))
 
@@ -61,7 +60,6 @@ lint: node_modules $(ESLINT) $(SRCS)
 .PHONY: nsp
 nsp: node_modules $(NSP)
 	@($(NSP) check || echo 1) | $(NSP_BADGE)
-	@rm $(SHRINKWRAP)
 
 
 .PHONY: codestyle

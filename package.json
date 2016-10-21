@@ -31,11 +31,12 @@
     "prepush": "make prepush"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "eslint": "^0.24.1",
-    "jscs": "^1.13.1",
-    "mocha": "^2.2.5",
-    "nsp": "^2.1.0",
+    "chai": "^3.5.0",
+    "eslint": "^3.8.1",
+    "istanbul": "^0.4.5",
+    "jscs": "^3.0.7",
+    "mocha": "^3.1.2",
+    "nsp": "^2.6.2",
     "restify": "^4.0.0",
     "restify-clients": "^1.4.0"
   },

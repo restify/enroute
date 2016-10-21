@@ -68,12 +68,12 @@ var CONFIG = {
 
 var SERVER;
 
-describe('enroute-install', function() {
+describe('enroute-install', function () {
     before(function () {
         SERVER = restify.createServer();
     });
 
-    it('should install routes', function(done) {
+    it('should install routes', function (done) {
         enroute({
             data: CONFIG,
             server: SERVER
@@ -83,7 +83,7 @@ describe('enroute-install', function() {
         });
     });
 
-    it('should fail if route source DNE', function(done) {
+    it('should fail if route source DNE', function (done) {
         enroute({
             data: {
                 foo: {
@@ -97,7 +97,7 @@ describe('enroute-install', function() {
         });
     });
 
-    it('should fail if route source is not a function', function(done) {
+    it('should fail if route source is not a function', function (done) {
         enroute({
             data: {
                 foo: {
@@ -145,13 +145,14 @@ function assertServer(opts, cb) {
                     method = 'del';
                     /* eslint-enable no-function-reassign */
                 }
+
                 if (method === 'options') {
                     /* eslint-disable no-param-reassign */
                     method = 'opts';
                     /* eslint-enable no-function-reassign */
                 }
                 barrier.start(method + name);
-                client[method]('/' + name, function(err, req, res, obj) {
+                client[method]('/' + name, function (err, req, res, obj) {
                     assert.ifError(err);
                     assert.equal(name, res.headers.name);
                     assert.equal(method, res.headers.method);
