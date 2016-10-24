@@ -1,12 +1,11 @@
 {
   "name": "restify-enroute",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "main": "./lib/index.js",
-  "description": "dynamically inject routes into restify app from configuration file",
+  "description": "Config driven restify route creation",
   "homepage": "http://www.restify.com",
   "author": {
-    "name": "Tsubomi Imamura",
-    "email": "tsubomi.imamura@gmail.com"
+    "name": "Yunong Xiao"
   },
   "repository": {
     "type": "git",
@@ -31,21 +30,22 @@
     "prepush": "make prepush"
   },
   "devDependencies": {
-    "chai": "^3.2.0",
-    "eslint": "^0.24.1",
-    "jscs": "^1.13.1",
-    "mocha": "^2.2.5",
-    "nsp": "^2.1.0"
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.14",
+    "eslint": "^3.8.1",
+    "istanbul": "^0.4.5",
+    "jscs": "^3.0.7",
+    "mocha": "^3.1.2",
+    "nsp": "^2.6.2",
+    "restify": "^4.0.0",
+    "restify-clients": "^1.4.0",
+    "uuid": "^2.0.3"
   },
   "dependencies": {
-    "app-root-path": "^1.0.0",
-    "assert-plus": "^0.1.5",
-    "body-parser": "^1.14.1",
-    "bunyan": "^1.5.1",
-    "dtrace-provider": "^0.6.0",
-    "restify": "^4.1.1",
-    "restify-clients": "^1.1.1",
-    "shelljs": "^0.5.3",
+    "ajv": "^4.8.0",
+    "assert-plus": "^1.0.0",
+    "lodash": "^4.16.4",
+    "vasync": "^1.6.4",
     "verror": "^1.6.0"
   }
 }

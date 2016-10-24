@@ -16,8 +16,9 @@ MOCHA       := $(NODE_BIN)/mocha
 _MOCHA      := $(NODE_BIN)/_mocha
 ISTANBUL    := $(NODE_BIN)/istanbul
 COVERALLS   := $(NODE_BIN)/coveralls
+NPM		:= npm
 NSP         := $(NODE_BIN)/nsp
-NPM		    := npm
+YARN		    := yarn
 NSP_BADGE   := $(TOOLS)/nspBadge.js
 
 
@@ -30,7 +31,6 @@ LIB_FILES  	   := $(ROOT)/lib
 TEST_FILES     := $(ROOT)/test
 COVERAGE_FILES := $(ROOT)/coverage
 LCOV           := $(ROOT)/coverage/lcov.info
-SHRINKWRAP     := $(ROOT)/npm-shrinkwrap.json
 SRCS           := $(shell find $(LIB_FILES) $(TEST_FILES) -name '*.js' -type f \
 					-not \( -path './node_modules/*' -prune \))
 
@@ -43,7 +43,7 @@ all: node_modules lint codestyle test clean-coverage
 
 
 node_modules: package.json
-	$(NPM) install
+	$(YARN)
 	@touch $(NODE_MODULES)
 
 
@@ -62,7 +62,6 @@ lint: node_modules $(ESLINT) $(SRCS)
 nsp: node_modules $(NSP)
 	$(NPM) shrinkwrap --dev
 	@($(NSP) check || echo 1) | $(NSP_BADGE)
-	@rm $(SHRINKWRAP)
 
 
 .PHONY: codestyle

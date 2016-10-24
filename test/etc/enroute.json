@@ -1,0 +1,21 @@
+{
+    "schemaVersion": 1,
+    "routes": {
+        "foo": {
+            "get": {
+                "source": "./lib/foo/index.js"
+            },
+            "post": {
+                "source": "./lib/foo/index.js"
+            }
+        },
+        "bar": {
+            "get": {
+                "source": "./lib/bar/index.js"
+            },
+            "post": {
+                "source": "./lib/bar/index.js"
+            }
+        }
+    }
+}

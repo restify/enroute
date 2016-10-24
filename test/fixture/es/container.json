@@ -1,8 +1,0 @@
-{
-    "group": "test",
-    "account": {
-        "name": "website",
-        "email": "site@netflix.com"
-    },
-    "version": "1.0.5"
-}
