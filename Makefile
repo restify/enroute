@@ -16,6 +16,7 @@ MOCHA       := $(NODE_BIN)/mocha
 _MOCHA      := $(NODE_BIN)/_mocha
 ISTANBUL    := $(NODE_BIN)/istanbul
 COVERALLS   := $(NODE_BIN)/coveralls
+NPM		:= npm
 NSP         := $(NODE_BIN)/nsp
 YARN		    := yarn
 NSP_BADGE   := $(TOOLS)/nspBadge.js
@@ -59,6 +60,7 @@ lint: node_modules $(ESLINT) $(SRCS)
 # make nsp always pass - run this as separate travis task for "reporting"
 .PHONY: nsp
 nsp: node_modules $(NSP)
+	$(NPM) shrinkwrap --dev
 	@($(NSP) check || echo 1) | $(NSP_BADGE)
 
 
