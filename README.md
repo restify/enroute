@@ -81,19 +81,21 @@ const restify = require('restify');
 
 const CONFIG = {
     schemaVersion: 1,
-    foo: {
-        get: {
-            source: './test/etc/fooGet.js'
-        },
-        post: {
-            source: './test/etc/fooPost.js'
-        },
-        delete: {
-            source: './test/etc/fooDelete.js'
-        },
-        head: {
-            source: './test/etc/fooHead.js'
-        },
+    routes: {
+        foo: {
+            get: {
+                source: './test/etc/fooGet.js'
+            },
+            post: {
+                source: './test/etc/fooPost.js'
+            },
+            delete: {
+                source: './test/etc/fooDelete.js'
+            },
+            head: {
+                source: './test/etc/fooHead.js'
+            },
+        }
     }
 };
 
