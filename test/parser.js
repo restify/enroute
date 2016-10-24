@@ -4,7 +4,7 @@ var _ = require('lodash');
 var assert = require('chai').assert;
 var uuid = require('uuid');
 
-var parser = require('../lib/parser');
+var enroute = require('../lib');
 
 var CONFIG_PATH = './test/etc/enroute.json';
 var BAD_CONFIG_PATH = './test/etc/badEnroute.json';
@@ -67,7 +67,7 @@ var CONFIG = {
 
 describe('enroute-parser', function () {
     it('should parse config from file', function (done) {
-        parser.parse({
+        enroute.validate({
             version: 1,
             configPath: CONFIG_PATH
         }, function (err, config) {
@@ -78,7 +78,7 @@ describe('enroute-parser', function () {
     });
 
     it('should parse config from string', function (done) {
-        parser.parse({
+        enroute.validate({
             version: 1,
             config: CONFIG
         }, function (err, config) {
@@ -89,7 +89,7 @@ describe('enroute-parser', function () {
     });
 
     it('should error if no file', function (done) {
-        parser.parse({
+        enroute.validate({
             configPath: uuid.v4()
         }, function (err) {
             assert.isOk(err);
@@ -98,7 +98,7 @@ describe('enroute-parser', function () {
     });
 
     it('should error if file not JSON', function (done) {
-        parser.parse({
+        enroute.validate({
             configPath: BAD_CONFIG_PATH
         }, function (err) {
             assert.isOk(err);
@@ -110,7 +110,7 @@ describe('enroute-parser', function () {
         var config = _.cloneDeep(CONFIG);
         delete config.schemaVersion;
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -122,7 +122,7 @@ describe('enroute-parser', function () {
         var config = _.cloneDeep(CONFIG);
         config.schemaVersion = '1';
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -134,7 +134,7 @@ describe('enroute-parser', function () {
         var config = _.cloneDeep(CONFIG);
         config.schemaVersion = 2;
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -146,7 +146,7 @@ describe('enroute-parser', function () {
         var config = _.cloneDeep(CONFIG);
         delete config.routes;
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -158,7 +158,7 @@ describe('enroute-parser', function () {
         var config = _.cloneDeep(CONFIG);
         config.routes = {};
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -172,7 +172,7 @@ describe('enroute-parser', function () {
             foo: {}
         };
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -184,7 +184,7 @@ describe('enroute-parser', function () {
         var config = _.cloneDeep(CONFIG);
         config.foo = 'not-an-object';
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -199,7 +199,7 @@ describe('enroute-parser', function () {
             source: 'foo'
         };
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -212,7 +212,7 @@ describe('enroute-parser', function () {
 
         config.routes.foo.post = {};
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
@@ -225,7 +225,7 @@ describe('enroute-parser', function () {
 
         config.routes.foo.post.foo = 'foo';
 
-        parser.parse({
+        enroute.validate({
             config: config
         }, function (err) {
             assert.isOk(err);
