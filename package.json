@@ -38,7 +38,8 @@
     "mocha": "^3.1.2",
     "nsp": "^2.6.2",
     "restify": "^4.0.0",
-    "restify-clients": "^1.4.0"
+    "restify-clients": "^1.4.0",
+    "uuid": "^2.0.3"
   },
   "dependencies": {
     "ajv": "^4.8.0",

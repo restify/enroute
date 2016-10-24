@@ -2,10 +2,12 @@
 
 var _ = require('lodash');
 var assert = require('chai').assert;
+var uuid = require('uuid');
 
 var parser = require('../lib/parser');
 
 var CONFIG_PATH = './test/etc/enroute.json';
+var BAD_CONFIG_PATH = './test/etc/badEnroute.json';
 var CONFIG = {
     schemaVersion: 1,
     routes: {
@@ -82,6 +84,24 @@ describe('enroute-parser', function () {
         }, function (err, config) {
             assert.ifError(err);
             assert.deepEqual(CONFIG, config);
+            return done();
+        });
+    });
+
+    it('should error if no file', function (done) {
+        parser.parse({
+            configPath: uuid.v4()
+        }, function (err) {
+            assert.isOk(err);
+            return done();
+        });
+    });
+
+    it('should error if file not JSON', function (done) {
+        parser.parse({
+            configPath: BAD_CONFIG_PATH
+        }, function (err) {
+            assert.isOk(err);
             return done();
         });
     });
