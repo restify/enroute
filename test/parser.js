@@ -149,7 +149,7 @@ describe('enroute-parser', function () {
     it('should error if route contains no methods', function (done) {
         var config = _.cloneDeep(CONFIG);
         config.routes = {
-            'foo': {}
+            foo: {}
         };
 
         parser.parse({
