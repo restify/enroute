@@ -14,35 +14,37 @@ like this:
 ```json
 {
     "schemaVersion": 1,
-    "foo": {
-        "get": {
-            "source": "./test/etc/fooGet.js"
+    "routes": {
+        "foo": {
+            "get": {
+                "source": "./test/etc/fooGet.js"
+            },
+            "post": {
+                "source": "./test/etc/fooPost.js"
+            },
+            "put": {
+                "source": "./test/etc/fooPut.js"
+            },
+            "delete": {
+                "source": "./test/etc/fooDelete.js"
+            },
+            "head": {
+                "source": "./test/etc/fooHead.js"
+            },
+            "patch": {
+                "source": "./test/etc/fooPatch.js"
+            },
+            "options": {
+                "source": "./test/etc/fooOptions.js"
+            }
         },
-        "post": {
-            "source": "./test/etc/fooPost.js"
-        },
-        "put": {
-            "source": "./test/etc/fooPut.js"
-        },
-        "delete": {
-            "source": "./test/etc/fooDelete.js"
-        },
-        "head": {
-            "source": "./test/etc/fooHead.js"
-        },
-        "patch": {
-            "source": "./test/etc/fooPatch.js"
-        },
-        "options": {
-            "source": "./test/etc/fooOptions.js"
-        }
-    },
-    "bar": {
-        "get": {
-            "source": "./test/etc/barGet.js"
-        },
-        "post": {
-            "source": "./test/etc/barPost.js"
+        "bar": {
+            "get": {
+                "source": "./test/etc/barGet.js"
+            },
+            "post": {
+                "source": "./test/etc/barPost.js"
+            }
         }
     }
 }

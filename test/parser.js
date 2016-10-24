@@ -8,55 +8,57 @@ var parser = require('../lib/parser');
 var CONFIG_PATH = './test/etc/enroute.json';
 var CONFIG = {
     schemaVersion: 1,
-    foo: {
-        get: {
-            source: './test/etc/fooGet.js'
+    routes: {
+        foo: {
+            get: {
+                source: './test/etc/fooGet.js'
+            },
+            post: {
+                source: './test/etc/fooPost.js'
+            },
+            put: {
+                source: './test/etc/fooPut.js'
+            },
+            delete: {
+                source: './test/etc/fooDelete.js'
+            },
+            head: {
+                source: './test/etc/fooHead.js'
+            },
+            patch: {
+                source: './test/etc/fooPatch.js'
+            },
+            options: {
+                source: './test/etc/fooOptions.js'
+            }
         },
-        post: {
-            source: './test/etc/fooPost.js'
+        bar: {
+            get: {
+                source: './test/etc/barGet.js'
+            },
+            post: {
+                source: './test/etc/barPost.js'
+            },
+            put: {
+                source: './test/etc/barPut.js'
+            },
+            delete: {
+                source: './test/etc/barDelete.js'
+            },
+            head: {
+                source: './test/etc/barHead.js'
+            },
+            patch: {
+                source: './test/etc/barPatch.js'
+            },
+            options: {
+                source: './test/etc/barOptions.js'
+            }
         },
-        put: {
-            source: './test/etc/fooPut.js'
-        },
-        delete: {
-            source: './test/etc/fooDelete.js'
-        },
-        head: {
-            source: './test/etc/fooHead.js'
-        },
-        patch: {
-            source: './test/etc/fooPatch.js'
-        },
-        options: {
-            source: './test/etc/fooOptions.js'
-        }
-    },
-    bar: {
-        get: {
-            source: './test/etc/barGet.js'
-        },
-        post: {
-            source: './test/etc/barPost.js'
-        },
-        put: {
-            source: './test/etc/barPut.js'
-        },
-        delete: {
-            source: './test/etc/barDelete.js'
-        },
-        head: {
-            source: './test/etc/barHead.js'
-        },
-        patch: {
-            source: './test/etc/barPatch.js'
-        },
-        options: {
-            source: './test/etc/barOptions.js'
-        }
-    },
-    array: {
-        get: {
-            source: './test/etc/arrayGet.js'
+        array: {
+            get: {
+                source: './test/etc/arrayGet.js'
+            }
         }
     }
 };
@@ -135,7 +137,7 @@ describe('enroute-config', function () {
     it('should error if route contains invalid HTTP method', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.foo.foo = {
+        config.routes.foo.foo = {
             source: 'foo'
         };
 
@@ -150,7 +152,7 @@ describe('enroute-config', function () {
     it('should error if route does not contain source', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.foo.post = { };
+        config.routes.foo.post = { };
 
         parser.parse({
             config: config
@@ -163,7 +165,7 @@ describe('enroute-config', function () {
     it('should error if route contains other props', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.foo.post.foo = 'foo';
+        config.routes.foo.post.foo = 'foo';
 
         parser.parse({
             config: config

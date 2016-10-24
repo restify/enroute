@@ -13,55 +13,57 @@ var PORT = 1337 || process.env.PORT;
 
 var CONFIG = {
     schemaVersion: 1,
-    foo: {
-        get: {
-            source: './test/etc/fooGet.js'
+    routes: {
+        foo: {
+            get: {
+                source: './test/etc/fooGet.js'
+            },
+            post: {
+                source: './test/etc/fooPost.js'
+            },
+            put: {
+                source: './test/etc/fooPut.js'
+            },
+            delete: {
+                source: './test/etc/fooDelete.js'
+            },
+            head: {
+                source: './test/etc/fooHead.js'
+            },
+            patch: {
+                source: './test/etc/fooPatch.js'
+            },
+            options: {
+                source: './test/etc/fooOptions.js'
+            }
         },
-        post: {
-            source: './test/etc/fooPost.js'
+        bar: {
+            get: {
+                source: './test/etc/barGet.js'
+            },
+            post: {
+                source: './test/etc/barPost.js'
+            },
+            put: {
+                source: './test/etc/barPut.js'
+            },
+            delete: {
+                source: './test/etc/barDelete.js'
+            },
+            head: {
+                source: './test/etc/barHead.js'
+            },
+            patch: {
+                source: './test/etc/barPatch.js'
+            },
+            options: {
+                source: './test/etc/barOptions.js'
+            }
         },
-        put: {
-            source: './test/etc/fooPut.js'
-        },
-        delete: {
-            source: './test/etc/fooDelete.js'
-        },
-        head: {
-            source: './test/etc/fooHead.js'
-        },
-        patch: {
-            source: './test/etc/fooPatch.js'
-        },
-        options: {
-            source: './test/etc/fooOptions.js'
-        }
-    },
-    bar: {
-        get: {
-            source: './test/etc/barGet.js'
-        },
-        post: {
-            source: './test/etc/barPost.js'
-        },
-        put: {
-            source: './test/etc/barPut.js'
-        },
-        delete: {
-            source: './test/etc/barDelete.js'
-        },
-        head: {
-            source: './test/etc/barHead.js'
-        },
-        patch: {
-            source: './test/etc/barPatch.js'
-        },
-        options: {
-            source: './test/etc/barOptions.js'
-        }
-    },
-    array: {
-        get: {
-            source: './test/etc/arrayGet.js'
+        array: {
+            get: {
+                source: './test/etc/arrayGet.js'
+            }
         }
     }
 };
@@ -138,7 +140,7 @@ function assertServer(opts, cb) {
     SERVER.listen(PORT, function () {
         client = restifyClients.createStringClient('http://' + HOST + ':' +
             PORT);
-        _.forEach(config, function (route, name) {
+        _.forEach(config.routes, function (route, name) {
             _.forEach(route, function (source, method) {
                 if (method === 'delete') {
                     /* eslint-disable no-param-reassign */
