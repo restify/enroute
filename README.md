@@ -67,8 +67,8 @@ Installs routes as defined in opts into a restify server, invokes the callback
 when done.
 * `opts`: The options object containing
     * `opts.server` The restify server to install the routes on to.
-    * `opts.config` The POJO of the enroute config.
-    * `opts.configPath` The path to the enroute config on disk.
+    * `[opts.config]` The POJO of the enroute config.
+    * `[opts.configPath]` The path to the enroute config on disk.
 * `cb` The callback. Returns `Error` if there's an error installing the routes.
 
 Note only one of `opts.config` or `opts.configPath` is needed. The module will
