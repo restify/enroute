@@ -63,7 +63,7 @@ var CONFIG = {
     }
 };
 
-describe('enroute-config', function () {
+describe('enroute-parser', function () {
     it('should parse config from file', function (done) {
         parser.parse({
             version: 1,
@@ -122,6 +122,44 @@ describe('enroute-config', function () {
         });
     });
 
+    it('should error if no routes object', function (done) {
+        var config = _.cloneDeep(CONFIG);
+        delete config.routes;
+
+        parser.parse({
+            config: config
+        }, function (err) {
+            assert.isOk(err);
+            return done();
+        });
+    });
+
+    it('should error if empty routes object', function (done) {
+        var config = _.cloneDeep(CONFIG);
+        config.routes = {};
+
+        parser.parse({
+            config: config
+        }, function (err) {
+            assert.isOk(err);
+            return done();
+        });
+    });
+
+    it('should error if route contains no methods', function (done) {
+        var config = _.cloneDeep(CONFIG);
+        config.routes = {
+            'foo': {}
+        };
+
+        parser.parse({
+            config: config
+        }, function (err) {
+            assert.isOk(err);
+            return done();
+        });
+    });
+
     it('should error if route is not an object', function (done) {
         var config = _.cloneDeep(CONFIG);
         config.foo = 'not-an-object';
@@ -152,7 +190,7 @@ describe('enroute-config', function () {
     it('should error if route does not contain source', function (done) {
         var config = _.cloneDeep(CONFIG);
 
-        config.routes.foo.post = { };
+        config.routes.foo.post = {};
 
         parser.parse({
             config: config
