@@ -1,10 +1,10 @@
 #
 # Directories
 #
-ROOT           := $(shell pwd)
-NODE_MODULES   := $(ROOT)/node_modules
-NODE_BIN       := $(NODE_MODULES)/.bin
-TOOLS          := $(ROOT)/tools
+ROOT		:= $(shell pwd)
+NODE_MODULES	:= $(ROOT)/node_modules
+NODE_BIN	:= $(NODE_MODULES)/.bin
+TOOLS		:= $(ROOT)/tools
 
 
 #
@@ -12,27 +12,27 @@ TOOLS          := $(ROOT)/tools
 #
 ESLINT		:= $(NODE_BIN)/eslint
 JSCS		:= $(NODE_BIN)/jscs
-MOCHA       := $(NODE_BIN)/mocha
-_MOCHA      := $(NODE_BIN)/_mocha
-ISTANBUL    := $(NODE_BIN)/istanbul
-COVERALLS   := $(NODE_BIN)/coveralls
+MOCHA		:= $(NODE_BIN)/mocha
+_MOCHA		:= $(NODE_BIN)/_mocha
+ISTANBUL	:= $(NODE_BIN)/istanbul
+COVERALLS	:= $(NODE_BIN)/coveralls
 NPM		:= npm
-NSP         := $(NODE_BIN)/nsp
-YARN		    := yarn
-NSP_BADGE   := $(TOOLS)/nspBadge.js
+NSP		:= $(NODE_BIN)/nsp
+YARN		:= yarn
+NSP_BADGE	:= $(TOOLS)/nspBadge.js
 
 
 #
 # Files
 #
-GIT_HOOK_SRC   = '../../tools/githooks/pre-push'
-GIT_HOOK_DEST  = '.git/hooks/pre-push'
-LIB_FILES  	   := $(ROOT)/lib
-TEST_FILES     := $(ROOT)/test
-COVERAGE_FILES := $(ROOT)/coverage
-LCOV           := $(ROOT)/coverage/lcov.info
-SRCS           := $(shell find $(LIB_FILES) $(TEST_FILES) -name '*.js' -type f \
-					-not \( -path './node_modules/*' -prune \))
+GIT_HOOK_SRC	= '../../tools/githooks/pre-push'
+GIT_HOOK_DEST	= '.git/hooks/pre-push'
+LIB_FILES	:= $(ROOT)/lib
+TEST_FILES	:= $(ROOT)/test
+COVERAGE_FILES	:= $(ROOT)/coverage
+LCOV	:= $(ROOT)/coverage/lcov.info
+SRCS	:= $(shell find $(LIB_FILES) $(TEST_FILES) -name '*.js' -type f \
+	-not \( -path './node_modules/*' -prune \))
 
 #
 # Targets
