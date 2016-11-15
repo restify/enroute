@@ -89,6 +89,21 @@ describe('enroute-install', function () {
         });
     });
 
+    it('should throw exception if basePath is not provided', function (done) {
+        try {
+            enroute.install({
+                config: CONFIG,
+                server: SERVER
+            }, function (err) {
+                assert.ifError(err);
+            });
+        } catch (exception) {
+            assert.isNotNull(exception, 'Exception should exist');
+            assert.equal(exception.message, 'must specify opts.basePath');
+            done();
+        }
+    });
+
     it('should fail if route source DNE', function (done) {
         enroute.install({
             config: {
