@@ -99,7 +99,7 @@ describe('enroute-install', function () {
             });
         } catch (exception) {
             assert.isNotNull(exception, 'Exception should exist');
-            assert.equal(exception.message, 'must specify opts.basePath');
+            assert.equal(exception.actual, 'must specify opts.basePath');
             done();
         }
     });
