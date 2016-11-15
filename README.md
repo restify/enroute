@@ -68,7 +68,10 @@ when done.
 * `opts`: The options object containing
     * `opts.server` The restify server to install the routes on to.
     * `[opts.config]` The POJO of the enroute config.
+        * POJO requires a `basePath` attribute to be present. `basePath` 
+        allows the plugin to correctly identify the source file
     * `[opts.configPath]` The path to the enroute config on disk.
+        * Plugin derives the `basePath` from `[opts.configPath]` 
 * `cb` The callback. Returns `Error` if there's an error installing the routes.
 
 Note only one of `opts.config` or `opts.configPath` is needed. The module will
@@ -81,6 +84,7 @@ const restify = require('restify');
 
 const CONFIG = {
     schemaVersion: 1,
+    basePath: __dirname,
     routes: {
         foo: {
             get: {
@@ -132,6 +136,7 @@ const enroute = require('restify-enroute');
 
 const CONFIG = {
     schemaVersion: 1,
+    basePath: __dirname,
     routes: {
         foo: {
             get: {
