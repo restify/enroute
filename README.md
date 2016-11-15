@@ -68,6 +68,8 @@ when done.
 * `opts`: The options object containing
     * `opts.server` The restify server to install the routes on to.
     * `[opts.config]` The POJO of the enroute config.
+    * `[opts.basePath]` Used with `[opts.config]`. The POJO requires a 
+    `basePath` to correctly resolve the route source file(s). 
     * `[opts.configPath]` The path to the enroute config on disk.
 * `cb` The callback. Returns `Error` if there's an error installing the routes.
 
@@ -103,7 +105,8 @@ const server = restify.createServer();
 // install routes with enroute
 enroute.install({
     config: CONFIG,
-    server: server
+    server: server,
+    basePath: __dirname
 }, function (err) {
     if (err) {
         console.error('unable to install routes');
@@ -153,7 +156,8 @@ const CONFIG = {
 const server = restify.createServer();
 // install routes with enroute
 enroute.validate({
-    config: CONFIG
+    config: CONFIG,
+    basePath: __dirname
 }, function (err) {
     if (err) {
         console.error('unable to install routes');

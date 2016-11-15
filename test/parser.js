@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var _ = require('lodash');
 var assert = require('chai').assert;
 var uuid = require('uuid');
@@ -8,6 +10,8 @@ var enroute = require('../lib');
 
 var CONFIG_PATH = './test/etc/enroute.json';
 var BAD_CONFIG_PATH = './test/etc/badEnroute.json';
+var BASEPATH = path.join(__dirname, '..');
+
 var CONFIG = {
     schemaVersion: 1,
     routes: {
@@ -80,10 +84,14 @@ describe('enroute-parser', function () {
     it('should parse config from string', function (done) {
         enroute.validate({
             version: 1,
-            config: CONFIG
+            config: CONFIG,
+            basePath: BASEPATH
         }, function (err, config) {
             assert.ifError(err);
-            assert.deepEqual(CONFIG, config);
+            assert.deepEqual(config, {
+                validatedConfig: CONFIG,
+                basePath: BASEPATH
+            } );
             return done();
         });
     });
@@ -111,7 +119,8 @@ describe('enroute-parser', function () {
         delete config.schemaVersion;
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -123,7 +132,8 @@ describe('enroute-parser', function () {
         config.schemaVersion = '1';
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -135,7 +145,8 @@ describe('enroute-parser', function () {
         config.schemaVersion = 2;
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -147,7 +158,8 @@ describe('enroute-parser', function () {
         delete config.routes;
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -159,7 +171,8 @@ describe('enroute-parser', function () {
         config.routes = {};
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -173,7 +186,8 @@ describe('enroute-parser', function () {
         };
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -185,7 +199,8 @@ describe('enroute-parser', function () {
         config.foo = 'not-an-object';
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -200,7 +215,8 @@ describe('enroute-parser', function () {
         };
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -213,7 +229,8 @@ describe('enroute-parser', function () {
         config.routes.foo.post = {};
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -226,7 +243,8 @@ describe('enroute-parser', function () {
         config.routes.foo.post.foo = 'foo';
 
         enroute.validate({
-            config: config
+            config: config,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
