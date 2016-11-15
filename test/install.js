@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var _ = require('lodash');
 var assert = require('chai').assert;
 var restify = require('restify');
@@ -10,6 +12,7 @@ var enroute = require('../lib/index');
 
 var HOST = 'localhost' || process.env.HOST;
 var PORT = 1337 || process.env.PORT;
+var BASEPATH = path.join(__dirname, '..');
 
 var CONFIG = {
     schemaVersion: 1,
@@ -78,11 +81,27 @@ describe('enroute-install', function () {
     it('should install routes', function (done) {
         enroute.install({
             config: CONFIG,
-            server: SERVER
+            server: SERVER,
+            basePath: BASEPATH
         }, function (err) {
             assert.ifError(err);
             assertServer({}, done);
         });
+    });
+
+    it('should throw exception if basePath is not provided', function (done) {
+        try {
+            enroute.install({
+                config: CONFIG,
+                server: SERVER
+            }, function (err) {
+                assert.ifError(err);
+            });
+        } catch (exception) {
+            assert.isNotNull(exception, 'Exception should exist');
+            assert.equal(exception.actual, 'must specify opts.basePath');
+            done();
+        }
     });
 
     it('should fail if route source DNE', function (done) {
@@ -92,7 +111,8 @@ describe('enroute-install', function () {
                     get: 'source does not exist'
                 }
             },
-            server: SERVER
+            server: SERVER,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
@@ -106,7 +126,8 @@ describe('enroute-install', function () {
                     get: './test/etc/notAFunction.js'
                 }
             },
-            server: SERVER
+            server: SERVER,
+            basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
             return done();
