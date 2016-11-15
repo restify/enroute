@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var _ = require('lodash');
 var assert = require('chai').assert;
 var restify = require('restify');
@@ -13,56 +15,57 @@ var PORT = 1337 || process.env.PORT;
 
 var CONFIG = {
     schemaVersion: 1,
+    basePath: path.join(__dirname, '..', '/test'),
     routes: {
         foo: {
             get: {
-                source: './test/etc/fooGet.js'
+                source: './etc/fooGet.js'
             },
             post: {
-                source: './test/etc/fooPost.js'
+                source: './etc/fooPost.js'
             },
             put: {
-                source: './test/etc/fooPut.js'
+                source: './etc/fooPut.js'
             },
             delete: {
-                source: './test/etc/fooDelete.js'
+                source: './etc/fooDelete.js'
             },
             head: {
-                source: './test/etc/fooHead.js'
+                source: './etc/fooHead.js'
             },
             patch: {
-                source: './test/etc/fooPatch.js'
+                source: './etc/fooPatch.js'
             },
             options: {
-                source: './test/etc/fooOptions.js'
+                source: './etc/fooOptions.js'
             }
         },
         bar: {
             get: {
-                source: './test/etc/barGet.js'
+                source: './etc/barGet.js'
             },
             post: {
-                source: './test/etc/barPost.js'
+                source: './etc/barPost.js'
             },
             put: {
-                source: './test/etc/barPut.js'
+                source: './etc/barPut.js'
             },
             delete: {
-                source: './test/etc/barDelete.js'
+                source: './etc/barDelete.js'
             },
             head: {
-                source: './test/etc/barHead.js'
+                source: './etc/barHead.js'
             },
             patch: {
-                source: './test/etc/barPatch.js'
+                source: './etc/barPatch.js'
             },
             options: {
-                source: './test/etc/barOptions.js'
+                source: './etc/barOptions.js'
             }
         },
         array: {
             get: {
-                source: './test/etc/arrayGet.js'
+                source: './etc/arrayGet.js'
             }
         }
     }
@@ -103,7 +106,7 @@ describe('enroute-install', function () {
         enroute.install({
             config: {
                 foo: {
-                    get: './test/etc/notAFunction.js'
+                    get: './etc/notAFunction.js'
                 }
             },
             server: SERVER
