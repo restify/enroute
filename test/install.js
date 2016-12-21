@@ -100,6 +100,7 @@ describe('enroute-install', function () {
         } catch (exception) {
             assert.isNotNull(exception, 'Exception should exist');
             assert.equal(exception.actual, 'must specify opts.basePath');
+            assert.isOk(exception.stack);
             done();
         }
     });
@@ -115,6 +116,7 @@ describe('enroute-install', function () {
             basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
+            assert.isOk(err.stack);
             return done();
         });
     });
@@ -130,6 +132,7 @@ describe('enroute-install', function () {
             basePath: BASEPATH
         }, function (err) {
             assert.isOk(err);
+            assert.isOk(err.stack);
             return done();
         });
 
