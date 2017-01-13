@@ -8,7 +8,7 @@
 [![NSP Status](https://img.shields.io/badge/NSP%20status-no%20vulnerabilities-green.svg)](https://travis-ci.org/restify/enroute)
 
 This module provides configuration driven route installation for restify.
-Instead of having to declare routes in code, you can create a confiuration file
+Instead of having to declare routes in code, you can create a configuration file
 like this:
 
 ```json
