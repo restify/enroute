@@ -12,6 +12,7 @@ Thumbs.db
 npm-debug.log
 yarn.lock
 npm-shrinkwrap.json
+package-lock.json
 coverage
 
 # build task results for ci
