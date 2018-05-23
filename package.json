@@ -1,6 +1,6 @@
 {
   "name": "restify-enroute",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "main": "./lib/index.js",
   "description": "Config driven restify route creation",
   "homepage": "http://www.restify.com",
