@@ -68,13 +68,20 @@ when done.
 * `opts`: The options object containing
     * `opts.server` The restify server to install the routes on to.
     * `[opts.config]` The POJO of the enroute config.
-    * `[opts.basePath]` Used with `[opts.config]`. The POJO requires a 
-    `basePath` to correctly resolve the route source file(s). 
+    * `[opts.basePath]` Used with `[opts.config]`. The POJO requires a
+    `basePath` to correctly resolve the route source file(s).
     * `[opts.configPath]` The path to the enroute config on disk.
+    * `[opts.hotReload]` Indicate whether you want the server to reload the
+                         route from disk each time a request is served,
+                         defaults to false
 * `cb` The callback. Returns `Error` if there's an error installing the routes.
 
 Note only one of `opts.config` or `opts.configPath` is needed. The module will
 either read in the file from disk, or use a pre-populated POJO.
+
+`opts.hotReload` allows the restify server to reload the route from disk each
+time the request is processed. This is extremely slow and should only be used
+in non-production instances.
 
 ### Example
 ```javascript

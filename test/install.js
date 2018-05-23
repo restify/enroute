@@ -4,15 +4,19 @@ var path = require('path');
 
 var _ = require('lodash');
 var assert = require('chai').assert;
+var fsExtra = require('fs-extra');
+var mkdirp = require('mkdirp');
 var restify = require('restify');
 var restifyClients = require('restify-clients');
 var vasync = require('vasync');
+var uuid = require('uuid');
 
 var enroute = require('../lib/index');
 
 var HOST = 'localhost' || process.env.HOST;
 var PORT = 1337 || process.env.PORT;
 var BASEPATH = path.join(__dirname, '..');
+var HOT_RELOAD_TMP_DIR = '/tmp/' + uuid.v4();
 
 var CONFIG = {
     schemaVersion: 1,
@@ -70,6 +74,64 @@ var CONFIG = {
         }
     }
 };
+
+var HOT_RELOAD_CONFIG = {
+    schemaVersion: 1,
+    routes: {
+        foo: {
+            get: {
+                source: './fooGet.js'
+            },
+            post: {
+                source: './fooPost.js'
+            },
+            put: {
+                source: './fooPut.js'
+            },
+            delete: {
+                source: './fooDelete.js'
+            },
+            head: {
+                source: './fooHead.js'
+            },
+            patch: {
+                source: './fooPatch.js'
+            },
+            options: {
+                source: './fooOptions.js'
+            }
+        },
+        bar: {
+            get: {
+                source: './barGet.js'
+            },
+            post: {
+                source: './barPost.js'
+            },
+            put: {
+                source: './barPut.js'
+            },
+            delete: {
+                source: './barDelete.js'
+            },
+            head: {
+                source: './barHead.js'
+            },
+            patch: {
+                source: './barPatch.js'
+            },
+            options: {
+                source: './barOptions.js'
+            }
+        },
+        array: {
+            get: {
+                source: './arrayGet.js'
+            }
+        }
+    }
+};
+
 
 var SERVER;
 
@@ -143,6 +205,52 @@ describe('enroute-install', function () {
             return done();
         });
     });
+});
+
+describe('hot reload', function () {
+    before(function (done) {
+        SERVER = restify.createServer();
+        /* eslint-disable consistent-return */
+        mkdirp(HOT_RELOAD_TMP_DIR, function (err) {
+            if (err) {
+                return done(err);
+            }
+            // copy over the hot reloaded route
+            fsExtra.copy(BASEPATH + '/test/etc',
+                HOT_RELOAD_TMP_DIR, function (e2) {
+                return done(e2);
+            });
+        });
+    });
+
+    it('should hot reload routes', function (done) {
+        enroute.install({
+            config: HOT_RELOAD_CONFIG,
+            server: SERVER,
+            basePath: HOT_RELOAD_TMP_DIR,
+            hotReload: true
+        }, function (err) {
+            assert.ifError(err);
+            // assert the routes were installed correctly
+            assertServer({}, function (err2) {
+                assert.ifError(err2);
+                // now we change fooGet.js to return a 'reload' header
+                fsExtra.copy(HOT_RELOAD_TMP_DIR + '/fooHotReload.js',
+                    HOT_RELOAD_TMP_DIR + '/fooGet.js', function (err3) {
+
+                        assert.ifError(err3);
+                        var client = restifyClients.createStringClient('http://'
+                            + HOST + ':' + PORT);
+                        client.get('/foo', function (err4, req, res, obj) {
+                            assert.ifError(err4);
+                            assert.equal('yes', res.headers.reload);
+                            return done();
+                        });
+                    });
+            });
+        });
+    });
+
 });
 
 
