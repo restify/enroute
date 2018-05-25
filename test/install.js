@@ -16,7 +16,6 @@ var enroute = require('../lib/index');
 var HOST = 'localhost' || process.env.HOST;
 var PORT = 1337 || process.env.PORT;
 var BASEPATH = path.join(__dirname, '..');
-var HOT_RELOAD_TMP_DIR = '/tmp/' + uuid.v4();
 
 var CONFIG = {
     schemaVersion: 1,
@@ -208,7 +207,9 @@ describe('enroute-install', function () {
 });
 
 describe('hot reload', function () {
-    before(function (done) {
+    var HOT_RELOAD_TMP_DIR = '/tmp/' + uuid.v4();
+
+    beforeEach(function (done) {
         SERVER = restify.createServer();
         /* eslint-disable consistent-return */
         mkdirp(HOT_RELOAD_TMP_DIR, function (err) {
@@ -218,8 +219,8 @@ describe('hot reload', function () {
             // copy over the hot reloaded route
             fsExtra.copy(BASEPATH + '/test/etc',
                 HOT_RELOAD_TMP_DIR, function (e2) {
-                return done(e2);
-            });
+                    return done(e2);
+                });
         });
     });
 
@@ -242,6 +243,7 @@ describe('hot reload', function () {
                         var client = restifyClients.createStringClient('http://'
                             + HOST + ':' + PORT);
                         client.get('/foo', function (err4, req, res, obj) {
+                            client.close();
                             assert.ifError(err4);
                             assert.equal('yes', res.headers.reload);
                             return done();
@@ -251,8 +253,71 @@ describe('hot reload', function () {
         });
     });
 
+    afterEach(function (done) {
+        fsExtra.remove(HOT_RELOAD_TMP_DIR, function () {
+            SERVER.close(function () {
+                return done();
+            });
+        });
+    });
 });
 
+// separate suite to prevent Mocha from running multiple tests at once
+describe('hot reload exclude', function () {
+    var HOT_RELOAD_TMP_DIR = '/tmp/' + uuid.v4();
+    before(function (done) {
+        SERVER = restify.createServer();
+        /* eslint-disable consistent-return */
+        mkdirp(HOT_RELOAD_TMP_DIR, function (err) {
+            if (err) {
+                return done(err);
+            }
+            // copy over the hot reloaded route
+            fsExtra.copy(BASEPATH + '/test/etc',
+                HOT_RELOAD_TMP_DIR, function (e2) {
+                    return done(e2);
+                });
+        });
+    });
+
+    it('should not hot reload routes that are excluded', function (done) {
+        enroute.install({
+            config: HOT_RELOAD_CONFIG,
+            server: SERVER,
+            basePath: HOT_RELOAD_TMP_DIR,
+            excludePath: 'fooGet.js',
+            hotReload: true
+        }, function (err) {
+            assert.ifError(err);
+            // assert the routes were installed correctly
+            assertServer({}, function (err2) {
+                assert.ifError(err2);
+                // now we change fooGet.js to return a 'reload' header
+                fsExtra.copy(HOT_RELOAD_TMP_DIR + '/fooHotReload.js',
+                    HOT_RELOAD_TMP_DIR + '/fooGet.js', function (err3) {
+
+                        assert.ifError(err3);
+                        var client = restifyClients.createStringClient('http://'
+                            + HOST + ':' + PORT);
+                        client.get('/foo', function (err4, req, res, obj) {
+                            client.close();
+                            assert.ifError(err4);
+                            assert.isNotOk(res.headers.reload);
+                            return done();
+                        });
+                    });
+            });
+        });
+    });
+
+    afterEach(function (done) {
+        fsExtra.remove(HOT_RELOAD_TMP_DIR, function () {
+            SERVER.close(function () {
+                return done();
+            });
+        });
+    });
+});
 
 /// Privates
 

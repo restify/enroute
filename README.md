@@ -74,6 +74,8 @@ when done.
     * `[opts.hotReload]` Indicate whether you want the server to reload the
                          route from disk each time a request is served,
                          defaults to false
+    * `[opts.excludePath]` The relative path to the basepath to exclude
+                           reloaded routes
 * `cb` The callback. Returns `Error` if there's an error installing the routes.
 
 Note only one of `opts.config` or `opts.configPath` is needed. The module will
