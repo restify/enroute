@@ -127,7 +127,7 @@ describe('enroute-parser', function () {
         });
     });
 
-    it('should error if no schemaVersion not number', function (done) {
+    it('should error if schemaVersion not number', function (done) {
         var config = _.cloneDeep(CONFIG);
         config.schemaVersion = '1';
 
@@ -140,9 +140,9 @@ describe('enroute-parser', function () {
         });
     });
 
-    it('should error if no schemaVersion not supported', function (done) {
+    it('should error if schemaVersion not supported', function (done) {
         var config = _.cloneDeep(CONFIG);
-        config.schemaVersion = 2;
+        config.schemaVersion = 3;
 
         enroute.validate({
             config: config,

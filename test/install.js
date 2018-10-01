@@ -319,8 +319,68 @@ describe('hot reload exclude', function () {
     });
 });
 
-/// Privates
+describe('case sensitive routes', function () {
+    beforeEach(function () {
+        SERVER = restify.createServer();
+    });
 
+    it('should install routes with caseSensitive === false', function (done) {
+        enroute.install({
+            config: _.merge({}, CONFIG, {
+                schemaVersion: 2,
+                caseSensitive: false
+            }),
+            server: SERVER,
+            basePath: BASEPATH
+        }, function (err) {
+            assert.ifError(err);
+            assertServer({}, done);
+        });
+    });
+
+    it('should install routes with caseSensitive === true', function (done) {
+        enroute.install({
+            config: _.merge({}, CONFIG, {
+                schemaVersion: 2,
+                caseSensitive: true
+            }),
+            server: SERVER,
+            basePath: BASEPATH
+        }, function (err) {
+            assert.ifError(err);
+            assertServer({}, done);
+        });
+    });
+
+    it('should throw exception if caseSensitive set and is not boolean',
+        function (done) {
+            try {
+                enroute.install({
+                    config: _.merge({}, CONFIG, {
+                        schemaVersion: 2,
+                        caseSensitive: 'true'
+                    }),
+                    server: SERVER
+                }, function (err) {
+                    assert.ifError(err);
+                });
+            } catch (exception) {
+                assert.isNotNull(exception, 'Exception should exist');
+                assert.equal(exception.actual,
+                    'must specify opts.basePath');
+                assert.isOk(exception.stack);
+                done();
+            }
+        });
+
+    afterEach(function (done) {
+        SERVER.close(function () {
+            return done();
+        });
+    });
+});
+
+/// Privates
 
 function assertServer(opts, cb) {
     var config = _.cloneDeep(CONFIG);
