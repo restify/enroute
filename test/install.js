@@ -1,7 +1,6 @@
 'use strict';
 
 var path = require('path');
-var util = require('util');
 var _ = require('lodash');
 var assert = require('chai').assert;
 var fsExtra = require('fs-extra');
@@ -334,7 +333,6 @@ describe('case sensitive routes', function () {
             server: SERVER,
             basePath: BASEPATH
         }, function (err) {
-            console.log('error:', util.inspect(err, {depth: null}));
             assert.ifError(err);
             assertServer({}, done);
         });
