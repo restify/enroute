@@ -40,15 +40,15 @@
     "mocha": "^10.1.0",
     "nsp": "^3.2.1",
     "restify-clients": "^4.2.0",
-    "uuid": "^2.0.3"
+    "uuid": "^9.0.0"
   },
   "dependencies": {
-    "ajv": "^4.8.0",
+    "ajv": "^8.11.0",
     "assert-plus": "^1.0.0",
     "bunyan": "^1.8.12",
     "lodash": "^4.16.4",
-    "restify": "^7.2.0",
-    "vasync": "^1.6.4",
+    "restify": "^8.6.1",
+    "vasync": "^2.2.1",
     "verror": "^1.6.0"
   }
 }
