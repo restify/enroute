@@ -160,7 +160,7 @@ describe('enroute-install', function () {
             });
         } catch (exception) {
             assert.isNotNull(exception, 'Exception should exist');
-            assert.equal(exception.actual, 'must specify opts.basePath');
+            assert.equal(exception.message, 'must specify opts.basePath');
             assert.isOk(exception.stack);
             done();
         }
@@ -212,16 +212,13 @@ describe('hot reload', function () {
     beforeEach(function (done) {
         SERVER = restify.createServer();
         /* eslint-disable consistent-return */
-        mkdirp(HOT_RELOAD_TMP_DIR, function (err) {
-            if (err) {
-                return done(err);
-            }
+        mkdirp(HOT_RELOAD_TMP_DIR).then(function () {
             // copy over the hot reloaded route
             fsExtra.copy(BASEPATH + '/test/etc',
                 HOT_RELOAD_TMP_DIR, function (e2) {
                     return done(e2);
                 });
-        });
+        }).catch(done);
     });
 
     it('should hot reload routes', function (done) {
@@ -268,16 +265,13 @@ describe('hot reload exclude', function () {
     before(function (done) {
         SERVER = restify.createServer();
         /* eslint-disable consistent-return */
-        mkdirp(HOT_RELOAD_TMP_DIR, function (err) {
-            if (err) {
-                return done(err);
-            }
+        mkdirp(HOT_RELOAD_TMP_DIR).then(function () {
             // copy over the hot reloaded route
             fsExtra.copy(BASEPATH + '/test/etc',
                 HOT_RELOAD_TMP_DIR, function (e2) {
                     return done(e2);
                 });
-        });
+        }).catch(done);
     });
 
     it('should not hot reload routes that are excluded', function (done) {
@@ -342,13 +336,11 @@ function assertServer(opts, cb) {
                 if (method === 'delete') {
                     /* eslint-disable no-param-reassign */
                     method = 'del';
-                    /* eslint-enable no-function-reassign */
                 }
 
                 if (method === 'options') {
                     /* eslint-disable no-param-reassign */
                     method = 'opts';
-                    /* eslint-enable no-function-reassign */
                 }
                 barrier.start(method + name);
                 client[method]('/' + name, function (err, req, res, obj) {
