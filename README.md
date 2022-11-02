@@ -1,10 +1,10 @@
 # restify-enroute
 [![NPM Version](https://img.shields.io/npm/v/restify-enroute.svg)](https://npmjs.org/package/restify-enroute)
-[![Build Status](https://travis-ci.org/restify/enroute.svg?branch=master)](https://travis-ci.org/restify/enroute)
-[![Coverage Status](https://coveralls.io/repos/restify/enroute/badge.svg?branch=master)](https://coveralls.io/r/restify/enroute?branch=master)
+[![Build Status](https://travis-ci.org/restify/enroute.svg?branch=main)](https://travis-ci.org/restify/enroute)
+[![Coverage Status](https://coveralls.io/repos/restify/enroute/badge.svg?branch=main)](https://coveralls.io/r/restify/enroute?branch=main)
 [![Dependency Status](https://david-dm.org/restify/enroute.svg)](https://david-dm.org/restify/enroute)
 [![devDependency Status](https://david-dm.org/restify/enroute/dev-status.svg)](https://david-dm.org/restify/enroute#info=devDependencies)
-[![bitHound Score](https://www.bithound.io/github/restify/enroute/badges/score.svg)](https://www.bithound.io/github/restify/enroute/master)
+[![bitHound Score](https://www.bithound.io/github/restify/enroute/badges/score.svg)](https://www.bithound.io/github/restify/enroute/main)
 [![NSP Status](https://img.shields.io/badge/NSP%20status-no%20vulnerabilities-green.svg)](https://travis-ci.org/restify/enroute)
 
 This module provides configuration driven route installation for restify.
