@@ -5,7 +5,7 @@
 [![Dependency Status](https://david-dm.org/restify/enroute.svg)](https://david-dm.org/restify/enroute)
 [![devDependency Status](https://david-dm.org/restify/enroute/dev-status.svg)](https://david-dm.org/restify/enroute#info=devDependencies)
 [![bitHound Score](https://www.bithound.io/github/restify/enroute/badges/score.svg)](https://www.bithound.io/github/restify/enroute/main)
-[![NSP Status](https://img.shields.io/badge/NSP%20status-no%20vulnerabilities-green.svg)](https://travis-ci.org/restify/enroute)
+[![NSP Status](https://img.shields.io/badge/NSP%20status-vulnerabilities%20found-red.svg)](https://travis-ci.org/restify/enroute)
 
 This module provides configuration driven route installation for restify.
 Instead of having to declare routes in code, you can create a configuration file
