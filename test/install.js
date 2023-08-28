@@ -169,8 +169,13 @@ describe('enroute-install', function () {
     it('should fail if route source DNE', function (done) {
         enroute.install({
             config: {
-                foo: {
-                    get: 'source does not exist'
+                schemaVersion: 1,
+                routes: {
+                    foo: {
+                        get: {
+                            source: 'source does not exist'
+                        }
+                    }
                 }
             },
             server: SERVER,
@@ -178,15 +183,21 @@ describe('enroute-install', function () {
         }, function (err) {
             assert.isOk(err);
             assert.isOk(err.stack);
+            assert.include(err.message, 'Cannot find module');
             return done();
         });
     });
 
-    it('should fail if route source is not a function', function (done) {
+    it('should fail if route source has a syntax error', function (done) {
         enroute.install({
             config: {
-                foo: {
-                    get: './test/etc/notAFunction.js'
+                schemaVersion: 1,
+                routes: {
+                    foo: {
+                        get: {
+                            source: './test/etc/syntaxError.js'
+                        }
+                    }
                 }
             },
             server: SERVER,
@@ -194,9 +205,36 @@ describe('enroute-install', function () {
         }, function (err) {
             assert.isOk(err);
             assert.isOk(err.stack);
+            assert.include(err.message, 'Unexpected identifier');
             return done();
         });
+    });
 
+    it('fails with sane message if two routes have a syntax error', done => {
+        enroute.install({
+            config: {
+                schemaVersion: 1,
+                routes: {
+                    apples: {
+                        get: {
+                            source: './test/etc/syntaxError.js'
+                        }
+                    },
+                    bananas: {
+                        get: {
+                            source: './test/etc/syntaxError.js'
+                        }
+                    }
+                }
+            },
+            server: SERVER,
+            basePath: BASEPATH
+        }, function (err) {
+            assert.isOk(err);
+            assert.isOk(err.stack);
+            assert.include(err.message, 'Unexpected identifier');
+            done();
+        });
     });
 
     after(function (done) {

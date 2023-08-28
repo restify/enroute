@@ -31,8 +31,7 @@ LIB_FILES	:= $(ROOT)/lib
 TEST_FILES	:= $(ROOT)/test
 COVERAGE_FILES	:= $(ROOT)/coverage
 LCOV	:= $(ROOT)/coverage/lcov.info
-SRCS	:= $(shell find $(LIB_FILES) $(TEST_FILES) -name '*.js' -type f \
-	-not \( -path './node_modules/*' -prune \))
+SRCS	:= $(shell find $(LIB_FILES) $(TEST_FILES) -name '*.js' -type f -not -name 'syntaxError.js' )
 
 #
 # Targets
