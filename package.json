@@ -47,7 +47,7 @@
     "assert-plus": "^1.0.0",
     "bunyan": "^1.8.12",
     "lodash": "^4.16.4",
-    "restify": "^7.2.0",
+    "restify": "^9.0.0",
     "vasync": "^1.6.4",
     "verror": "^1.6.0"
   }
