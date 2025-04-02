@@ -17,6 +17,12 @@ var HOST = 'localhost' || process.env.HOST;
 var PORT = 1337 || process.env.PORT;
 var BASEPATH = path.join(__dirname, '..');
 
+var [major, minor,] = process.versions.node.split(/[v.]/).map(Number);
+
+// https://github.com/nodejs/node/releases/tag/v20.19.0
+// https://github.com/nodejs/node/releases/tag/v22.12.0
+var nodeSupportsRequireESM = major > 22 || major === 22 && minor >= 12 || major === 20 && minor >= 19;
+
 var CONFIG = {
     schemaVersion: 1,
     routes: {
@@ -73,6 +79,13 @@ var CONFIG = {
         }
     }
 };
+if (nodeSupportsRequireESM) {
+    CONFIG.routes.esm = {
+        get: {
+            source: './test/etc/esmGet.mjs'
+        }
+    };
+}
 
 var HOT_RELOAD_CONFIG = {
     schemaVersion: 1,
@@ -146,7 +159,7 @@ describe('enroute-install', function () {
             basePath: BASEPATH
         }, function (err) {
             assert.ifError(err);
-            assertServer({}, done);
+            assertServer(CONFIG, done);
         });
     });
 
@@ -268,7 +281,7 @@ describe('hot reload', function () {
         }, function (err) {
             assert.ifError(err);
             // assert the routes were installed correctly
-            assertServer({}, function (err2) {
+            assertServer(HOT_RELOAD_CONFIG, function (err2) {
                 assert.ifError(err2);
                 // now we change fooGet.js to return a 'reload' header
                 fsExtra.copy(HOT_RELOAD_TMP_DIR + '/fooHotReload.js',
@@ -322,7 +335,7 @@ describe('hot reload exclude', function () {
         }, function (err) {
             assert.ifError(err);
             // assert the routes were installed correctly
-            assertServer({}, function (err2) {
+            assertServer(HOT_RELOAD_CONFIG, function (err2) {
                 assert.ifError(err2);
                 // now we change fooGet.js to return a 'reload' header
                 fsExtra.copy(HOT_RELOAD_TMP_DIR + '/fooHotReload.js',
@@ -354,8 +367,8 @@ describe('hot reload exclude', function () {
 /// Privates
 
 
-function assertServer(opts, cb) {
-    var config = _.cloneDeep(CONFIG);
+function assertServer(serverConfig, cb) {
+    var config = _.cloneDeep(serverConfig);
     delete config.schemaVersion;
 
     var client;

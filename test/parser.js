@@ -65,6 +65,11 @@ var CONFIG = {
             get: {
                 source: './test/etc/arrayGet.js'
             }
+        },
+        esm: {
+            get: {
+                source: './test/etc/esmGet.mjs'
+            }
         }
     }
 };
