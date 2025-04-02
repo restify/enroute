@@ -17,11 +17,12 @@ var HOST = 'localhost' || process.env.HOST;
 var PORT = 1337 || process.env.PORT;
 var BASEPATH = path.join(__dirname, '..');
 
-var [major, minor,] = process.versions.node.split(/[v.]/).map(Number);
+var [major, minor] = process.versions.node.split(/[v.]/).map(Number);
 
 // https://github.com/nodejs/node/releases/tag/v20.19.0
 // https://github.com/nodejs/node/releases/tag/v22.12.0
-var nodeSupportsRequireESM = major > 22 || major === 22 && minor >= 12 || major === 20 && minor >= 19;
+var nodeSupportsRequireESM = major > 22 || major === 22 && minor >= 12 ||
+    major === 20 && minor >= 19;
 
 var CONFIG = {
     schemaVersion: 1,
@@ -79,6 +80,7 @@ var CONFIG = {
         }
     }
 };
+
 if (nodeSupportsRequireESM) {
     CONFIG.routes.esm = {
         get: {
