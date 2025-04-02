@@ -17,9 +17,6 @@ _MOCHA		:= $(NODE_BIN)/_mocha
 ISTANBUL	:= $(NODE_BIN)/istanbul
 COVERALLS	:= $(NODE_BIN)/coveralls
 NPM		:= npm
-NSP		:= $(NODE_BIN)/nsp
-YARN		:= yarn
-NSP_BADGE	:= $(TOOLS)/nspBadge.js
 
 
 #
@@ -42,7 +39,7 @@ all: node_modules lint codestyle test clean-coverage
 
 
 node_modules: package.json
-	$(YARN)
+	$(NPM) install
 	@touch $(NODE_MODULES)
 
 
@@ -56,13 +53,6 @@ lint: node_modules $(ESLINT) $(SRCS)
 	@$(ESLINT) $(SRCS)
 
 
-# make nsp always pass - run this as separate travis task for "reporting"
-.PHONY: nsp
-nsp: node_modules $(NSP)
-	$(NPM) shrinkwrap --dev
-	@($(NSP) check || echo 1) | $(NSP_BADGE)
-
-
 .PHONY: codestyle
 codestyle: node_modules $(JSCS) $(SRCS)
 	@$(JSCS) $(SRCS)
@@ -74,7 +64,7 @@ codestyle-fix: node_modules $(JSCS) $(SRCS)
 
 
 .PHONY: prepush
-prepush: node_modules lint codestyle test nsp
+prepush: node_modules lint codestyle test
 
 
 .PHONY: test
