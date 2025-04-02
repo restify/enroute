@@ -1,10 +1,6 @@
 # restify-enroute
 [![NPM Version](https://img.shields.io/npm/v/restify-enroute.svg)](https://npmjs.org/package/restify-enroute)
 [![Build Status](https://github.com/restify/enroute/actions/workflows/test.yml/badge.svg)](https://github.com/restify/enroute/actions/workflows/test.yml)
-[![Coverage Status](https://coveralls.io/repos/restify/enroute/badge.svg?branch=main)](https://coveralls.io/r/restify/enroute?branch=main)
-[![Dependency Status](https://david-dm.org/restify/enroute.svg)](https://david-dm.org/restify/enroute)
-[![devDependency Status](https://david-dm.org/restify/enroute/dev-status.svg)](https://david-dm.org/restify/enroute#info=devDependencies)
-[![bitHound Score](https://www.bithound.io/github/restify/enroute/badges/score.svg)](https://www.bithound.io/github/restify/enroute/main)
 
 This module provides configuration driven route installation for restify.
 Instead of having to declare routes in code, you can create a configuration file
