@@ -87,6 +87,11 @@ if (nodeSupportsRequireESM) {
             source: './test/etc/esmGet.mjs'
         }
     };
+    CONFIG.routes.fakeEsm = {
+        get: {
+            source: './test/etc/fakeEsmGet.js'
+        }
+    };
 }
 
 var HOT_RELOAD_CONFIG = {
