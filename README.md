@@ -170,3 +170,26 @@ enroute.validate({
     }
 });
 ```
+
+## Cutting a release
+
+Releases are automated with [release-please](https://github.com/googleapis/release-please) and published to npm via GitHub Actions. We use [Conventional Commits](http://conventionalcommits.org/) to simplify the process of managing semver on this project — release-please parses commit types (`fix`, `feat`, etc.) to determine the version bump.
+
+### Release flow
+
+1. Merge pull requests to `main` using [Conventional Commits](http://conventionalcommits.org/).
+2. `release-please` opens or updates a **Release PR** with the version bump and changelog.
+3. Review and merge the Release PR when ready to ship.
+4. `release-please` creates a GitHub Release and version tag (for example `v6.3.0`).
+5. The same `release-please` run then dispatches `npm-publish` with that tag. It re-runs tests, validates the package contents (`npm pack --dry-run`), then pauses at the `Publish` environment for reviewer approval.
+6. After approval, the package is published to npm via [Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC).
+
+Release candidates follow the same path: merging an RC PR tags an `-rc` version, `npm-publish` publishes it with `--tag rc`, and `release-please` then opens a stable Release PR.
+
+### Dry run
+
+To validate the publish workflow without publishing, run **Actions → npm-publish → Run workflow** and leave `tag` empty. This runs tests and `npm pack --dry-run`, and skips the publish job.
+
+### Retrying a failed run
+
+If `npm-publish` fails, use **Re-run jobs** on the failed run itself (Actions tab) — it replays the same tag, so there's no need to cut a new one. You can also re-run **Actions → npm-publish → Run workflow** with the same `tag`. Either is safe even if `publish` partially ran, since `validate` checks whether the version is already on npm before continuing.
