@@ -16,6 +16,9 @@
     "Yunong Xiao"
   ],
   "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "files": [
     "lib"
   ],
@@ -46,7 +49,7 @@
     "assert-plus": "^1.0.0",
     "bunyan": "^1.8.12",
     "lodash": "^4.16.4",
-    "restify": "^10.0.0",
+    "restify": "^12.0.0",
     "vasync": "^2.2.1",
     "verror": "^1.6.0"
   }
